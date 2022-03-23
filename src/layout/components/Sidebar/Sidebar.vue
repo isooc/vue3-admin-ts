@@ -15,7 +15,7 @@
         :active-text-color="scssJson.menuActiveText"
         mode="vertical"
       >
-        <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path" />
+        <sidebar-item v-for="routeItem in routes" :key="routeItem.path" :item="routeItem" :base-path="routeItem.path" />
       </el-menu>
     </el-scrollbar>
   </div>
@@ -24,6 +24,8 @@
 <script setup lang="ts">
 import Logo from './Logo.vue'
 import SidebarItem from './SidebarItem.vue'
+import scssExportJson from '@/styles/variables-to-js.scss'
+import { ObjTy } from '~/common'
 //导入配置文件
 
 const store = useStore()
@@ -54,8 +56,6 @@ const dillScssExportToJson = (scssExportJson: any) => {
 }
 
 //get scss variable
-import scssExportJson from '@/styles/variables-to-js.scss'
-import { ObjTy } from '~/common'
 const scssJson = dillScssExportToJson(scssExportJson)
 const activeMenu = computed(() => {
   const { meta, fullPath } = route
