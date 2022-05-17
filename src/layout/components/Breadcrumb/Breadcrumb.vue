@@ -23,16 +23,16 @@
 
 <script setup lang="ts">
 import { compile } from 'path-to-regexp'
+import { useStore } from 'vuex'
+import { RouteItemTy } from '~/router'
 const levelList: any = ref(null)
 
 //Whether close the animation fo breadcrumb
-import { useStore } from 'vuex'
 const store = useStore()
 const settings = computed(() => {
   return store.state.app.settings
 })
 
-import { RouteItemTy } from '~/router'
 const route = useRoute()
 const getBreadcrumb = () => {
   // only show routes with meta.title

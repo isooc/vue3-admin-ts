@@ -25,7 +25,7 @@ export default {
   mounted(el: any, binding: any) {
     checkPermission(el, binding)
   },
-  componentUpdated(el: any, binding: any) {
+  updated(el: any, binding: any) {
     checkPermission(el, binding)
   }
 }

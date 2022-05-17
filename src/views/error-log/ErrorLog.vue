@@ -1,24 +1,16 @@
 <template>
   <div class="errorLogContainer">
     <!--操作-->
-    <div class="mr-3 rowSS">
-      <el-button type="primary" @click="errorLogProd">错误日志测试</el-button>
-      <el-button type="primary" @click="multiDelBtnClick">
-        <!-- 感觉写法复杂了-->
-        <el-icon style="vertical-align: middle">
-          <Delete />
-        </el-icon>
-        <span style="vertical-align: middle">删除</span>
-      </el-button>
+    <div class="rowSS flex-wrap">
       <!--条件搜索-->
-      <el-form ref="refsearchForm" :inline="true" class="demo-searchForm ml-2">
-        <el-form-item label-width="0px" label="" prop="errorLog" label-position="left">
+      <el-form ref="refsearchForm" :inline="true" label-width="0" class="demo-searchForm mb-1">
+        <el-form-item prop="errorLog" label-position="left">
           <el-input v-model="searchForm.errorLog" class="widthPx-150" placeholder="错误日志" />
         </el-form-item>
-        <el-form-item label-width="0px" label="" prop="pageUrl" label-position="left">
+        <el-form-item prop="pageUrl" label-position="left">
           <el-input v-model="searchForm.pageUrl" class="widthPx-200" placeholder="页面路径" />
         </el-form-item>
-        <el-form-item label-width="0px" label="" prop="createTime" label-position="left">
+        <el-form-item prop="createTime" label-position="left">
           <el-date-picker
             v-model="startEndArr"
             type="datetimerange"
@@ -33,7 +25,15 @@
         </el-form-item>
       </el-form>
       <!--查询按钮-->
-      <el-button @click="searchBtnClick">查询</el-button>
+      <div class="rowBS flex-1 mb-1">
+        <div class="rowSS flex-nowrap">
+          <el-button @click="searchBtnClick">查询</el-button>
+        </div>
+        <div class="rowSS flex-nowrap">
+          <el-button type="primary" @click="errorLogProd">错误日志测试</el-button>
+          <el-button type="primary" :icon="Delete" @click="multiDelBtnClick">删除</el-button>
+        </div>
+      </div>
     </div>
     <!--表格和分页-->
     <el-table
@@ -109,6 +109,9 @@
 import { Delete } from '@element-plus/icons-vue'
 import settings from '@/settings'
 import bus from '@/utils/bus'
+import packages from  "/package.json"
+import tablePageHook from '@/hooks/useTablePage'
+import { ObjTy } from '~/common'
 /*
  * 一般根据页面层次来排序 如此页面 表格查询和筛选->table的操作
  * 每个模块按：响应数据定义->公用方法->请求方法->页面按钮操作方法 进行排序
@@ -134,7 +137,6 @@ const errorLogImg = () => {
 
 /*表格查询和筛选*/
 let usertableData = ref([])
-import packages from  "/package.json"
 let searchForm: ObjTy = reactive({
   errorLog: '',
   pageUrl: `8.135.1.141/${packages.name}`,
@@ -164,8 +166,6 @@ let selectPageReq = () => {
     totalPage.value = resData.data?.total
   })
 }
-import tablePageHook from '@/hooks/useTablePage'
-import { ObjTy } from '~/common'
 let { pageNum, pageSize, handleCurrentChange, handleSizeChange } = tablePageHook(selectPageReq)
 const dateTimePacking = (timeArr: any) => {
   if (timeArr && timeArr.length === 2) {

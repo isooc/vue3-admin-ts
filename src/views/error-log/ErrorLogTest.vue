@@ -1,8 +1,8 @@
 <template>
   <div class="scroll-y">
-    <!--    <teleport to="body">-->
-    <!--      <div>i come from ErrorLogTest.vue</div>-->
-    <!--    </teleport>-->
+    <teleport to="body">
+      <div>i come from ErrorLogTest.vue</div>
+    </teleport>
     <div class="mt-2">throw unhandledrejection</div>
     <el-button type="primary" @click="handle">unhandledrejection</el-button>
 
@@ -27,6 +27,7 @@
 
 <script setup lang="ts">
 import { useStore } from 'vuex'
+import axiosReq from '@/utils/axiosReq'
 const store = useStore()
 let settings = computed(() => {
   return store.state.app.settings || {}
@@ -64,7 +65,6 @@ let reqCrossOrigin = () => {
   }).then(() => {})
 }
 
-import axiosReq from '@/utils/axiosReq'
 let req404 = () => {
   axiosReq({
     // baseURL: 'http://8.135.1.141/micro-service-test',
